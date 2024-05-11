@@ -1,5 +1,7 @@
 package com.esi.models;
 
+import com.google.gson.Gson;
+
 public class Booking {
 
     private String nomeCliente;
@@ -17,6 +19,11 @@ public class Booking {
     @Override
     public String toString() {
         return String.format("%s,%s,%s,%s", nomeCliente, numeroQuarto, dataEntrada, dataSaida);
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 
     public static Booking formStringToObject(String linha){

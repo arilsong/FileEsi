@@ -1,6 +1,8 @@
 package com.esi.services;
 
 import com.esi.dao.BookingFileHandler;
+import com.esi.dao.BookingJsonHandler;
+import com.esi.dao.BookingTxtHandler;
 import com.esi.models.Booking;
 
 import java.io.IOException;
@@ -9,10 +11,14 @@ import java.util.List;
 
 public class HotelBookingService {
 
-    private BookingFileHandler bookingFileHandler;
+    private final BookingFileHandler bookingFileHandler;
 
-    public HotelBookingService(BookingFileHandler bookingFileHandler) {
-        this.bookingFileHandler = bookingFileHandler;
+    public HotelBookingService(BookingTxtHandler bookingTxtHandler) {
+        this.bookingFileHandler = bookingTxtHandler;
+    }
+
+    public HotelBookingService(BookingJsonHandler bookingJsonHandler) {
+        this.bookingFileHandler = bookingJsonHandler;
     }
 
     public void adicionarBooking(){
@@ -31,7 +37,12 @@ public class HotelBookingService {
     }
 
     public void lerDoFicheiro(){
-        List<Booking> bookings = bookingFileHandler.lerDoFicheiro();
+        List<Booking> bookings = null;
+        try {
+            bookings = bookingFileHandler.lerDoFicheiro();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("Reservas já efetuadas:");
         for(Booking booking:bookings)
             System.out.println(booking);

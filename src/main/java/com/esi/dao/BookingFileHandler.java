@@ -28,7 +28,7 @@ public class BookingFileHandler {
         Files.write(caminhoFicheiro,linhas, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
 
-    public List<Booking> lerDoFicheiro(){
+    public List<Booking> lerDoFicheiro() throws IOException {
         List<Booking> bookings = new ArrayList<>();
         List<String> linhas = null;
 
